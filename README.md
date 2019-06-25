@@ -10,8 +10,8 @@ const options = {
     airlineCode: 'AA',
     flightNumber: '110',
     date: new Date(),
-    isArr: false, // Optional, default true
-    isLocalTime: false // Optional, default true
+    isArr: true, // Optional, default false
+    isLocalTime: true // Optional, default false(UTC)
 };
 const result = await api.lookUp(options);
 ```
