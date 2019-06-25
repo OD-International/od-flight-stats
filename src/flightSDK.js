@@ -1,9 +1,6 @@
 const fsConn = require('./connect');
-const md5 = require('md5');
 const moment = require('moment');
 
-//https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/AA/100/dep/2019/06/25?appId=fe718e2c&appKey=22a93116d60377acad667084cf62368c&utc=true"
-//https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/AA/100/dep/2019/05/25/appId=fe718e2c&appKey=22a93116d60377acad667084cf62368c&utc=true
 const FSSDK = function (appId, appKey) {
     this.appId = appId;
     this.appKey = appKey;
