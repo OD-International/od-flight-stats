@@ -1,6 +1,6 @@
 {
   "name": "od-flight-stats",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "API Flight that support search flight through flight stats",
   "main": "index.js",
   "dependencies": {
