@@ -1,29 +1,34 @@
 const request = require('request');
-const FS_URL = 'https://api.flightstats.com/flex';
+const FS_URL = 'https://api.flightstats.com';
 
-const fsRequest = (method, params, headers, body) => {
-    let op_url = FS_URL + '/';
+
+const fsRequest = (method, params = {}, query = {}, headers = {}, body = {}) => {
+    //URL
+    let url = FS_URL + '/';
+
+    //params
     params.forEach(param => {
-        op_url += (param + '/');
+        url += (param + '/');
     });
-    let options = {
-        method: method,
-        url: op_url,
-        body: body,
-        headers: headers,
-        json: true
-    };
+
+    //query
+    const query_keys = Object.keys(query);
+    if (query_keys.length > 0) {
+        const query_str = query_keys.map(key => {
+            return `${key}=${query[key]}`;
+        }).join('&');
+        url += `?${query_str}`;
+    }
+
+    //request
+    const options = {method, url: url, body, headers, json: true};
+
+
     return new Promise((resolve, reject) => {
-        request(options, (error, response, body) => {
-            if (!error) {
-                if (body.status === true) {
-                    resolve(body.payload ? body.payload : {});
-                } else {
-                    reject(body.message);
-                }
-            } else {
-                reject(error);
-            }
+        request(options, (err, response, body) => {
+            if (err) reject(err);
+            if (body.error) reject(body.error);
+            resolve(body);
         });
     });
 };
