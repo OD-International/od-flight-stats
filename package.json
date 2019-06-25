@@ -1,0 +1,27 @@
+{
+  "name": "od-flight-stats",
+  "version": "0.0.1",
+  "description": "API Flight that support search flight through flight stats",
+  "main": "index.js",
+  "dependencies": {
+    "md5": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OD-International/od-flight-stats.git"
+  },
+  "keywords": [
+    "flight",
+    "search"
+  ],
+  "author": "Chris Yao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OD-International/od-flight-stats/issues"
+  },
+  "homepage": "https://github.com/OD-International/od-flight-stats#readme"
+}
