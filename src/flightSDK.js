@@ -1,14 +1,12 @@
 const fsConn = require('./connect');
-const md5 = require('md5');
 const moment = require('moment');
 
-//https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/AA/100/dep/2019/06/25?appId=fe718e2c&appKey=22a93116d60377acad667084cf62368c&utc=true"
-//https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/AA/100/dep/2019/05/25/appId=fe718e2c&appKey=22a93116d60377acad667084cf62368c&utc=true
 const FSSDK = function (appId, appKey) {
     this.appId = appId;
     this.appKey = appKey;
 
     this.lookUp = lookUp.bind(this);
+    this.findFlight = findFlightWithKey.bind(this);
 
 
 };
@@ -29,7 +27,7 @@ function lookUp(options = {}) {
 
         const params = ['flex', 'flightstatus', 'rest', 'v2',
             'json', 'flight', 'status', airlineCode, flightNumber,
-            isArr ? 'arr' : 'dep',moDate.format('YYYY/MM/DD') ];
+            isArr ? 'arr' : 'dep', moDate.format('YYYY/MM/DD')];
 
         const query = {appId: this.appId, appKey: this.appKey, utc: !isLocalTime};
 
@@ -38,7 +36,29 @@ function lookUp(options = {}) {
     } catch (e) {
         throw e;
     }
+}
 
+function findFlightWithKey(flight_key) {
+    if (!this.appId) throw new Error('CANNOT FIND appId');
+    if (!this.appKey) throw new Error('CANNOT FIND appKey');
+
+    if (!flight_key) throw new Error('CANNOT FIND FLIGHT KEY');
+
+
+    try {
+        //curl -v  -X GET
+        // "https://api.flightstats.com/flex/flightstatus/rest/v2/json/flight/status/1008984817?appId=fe718e2c&appKey=22a93116d60377acad667084cf62368c"
+        const params = ['flex', 'flightstatus', 'rest', 'v2',
+            'json', 'flight', 'status', flight_key];
+
+        const query = {appId: this.appId, appKey: this.appKey};
+
+        return fsConn.fsRequest('GET', params, query, {}, {});
+
+
+    } catch (e) {
+        throw e;
+    }
 }
 
 
